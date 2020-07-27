@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multiple Users Chats</title>
+  <script defer src="http://localhost:3003/socket.io/socket.io.js"></script>
+  <script defer src="<%= globals.base_url %>api/public/javascripts/chat.js"></script>
+  <script>
+    const room_id = "<%= room_id %>";
+    const user_id= "<%= user_id %>";
+  </script>
+  <link rel="stylesheet" type="text/css" href="<%= globals.base_url %>api/public/stylesheets/chat.css">
+</head>
+<body>
+    <div>
+        <img class="logo" src="<%= globals.base_url %>api/public/images/icons/logo.png">
+    </div>
+    <div class="container">
+        <% 
+        if(room_chats.length > 0) {
+            for (var i = 0; i < room_chats.length; i++) { 
+                if(room_chats[i].user_id == user_id) { %>
+                    <div class="message right">You : <%= room_chats[i].message %></div>
+                <% } else { %>
+                    <div class="message left"><%= room_chats[i].user_name %> : <%= room_chats[i].message %></div>
+                <% }
+            }
+        }%> 
+    </div>
+    <div class="send">
+        <form action='#' id="send-container">
+            <input type="text" name="messageInp" id="messageInp" required >
+            <button class="btn" type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

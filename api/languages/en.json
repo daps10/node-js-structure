@@ -1,0 +1,188 @@
+{
+	"_Validator": "These Messages for Validator library",
+		"accepted": "The :attr must be accepted",
+	    "after": "The :attr must be a date after :date",
+	    "alpha": "The :attr may only contain letters",
+	    "alpha_dash": "The :attr may only contain letters, numbers, and dashes",
+	    "alpha_num": "The :attr may only contain letters and numbers",
+	    "array": "The :attr must be an array",
+	    "before": "The :attr must be a date before :date",
+	    "between": {
+	        "numeric": "The :attr must be between :min and :max",
+	        "file": "The :attr must be between :min and :max kilobytes",
+	        "string": "The :attr must be between :min and :max characters",
+	        "array": "The :attr must have between :min and :max items"
+	    },
+	    "boolean": "The :attr field must be true or false",
+	    "confirmed": "The :attr confirmation does not match",
+	    "date": "The :attr is not a valid date",
+	    "date_format": "The :attr does not match the format :format",
+	    "different": "The :attr and :other must be different",
+	    "digits": "The :attr must be :digits digits",
+	    "digits_between": "The :attr must be between :min and :max digits",
+	    "email": "The :attr must be a valid email address",
+	    "exists": "The selected :attr is invalid",
+	    "filled": "The :attr field is required",
+	    "image": "The :attr must be an image",
+	    "in": "The selected :attr is invalid",
+	    "integer": "The :attr must be an integer",
+	    "ip": "The :attr must be a valid IP address",
+	    "json": "The :attr must be a valid JSON string",
+	    "max": {
+	        "numeric": "The :attr may not be greater than :max",
+	        "file": "The :attr may not be greater than :max kilobytes",
+	        "string": "The :attr may not be greater than :max characters",
+	        "array": "The :attr may not have more than :max items"
+	    },
+	    "mimes": "The :attr must be a file of type: :values",
+	    "min": {
+	        "numeric": "The :attr must be at least :min",
+	        "file": "The :attr must be at least :min kilobytes",
+	        "string": "The :attr must be at least :min characters",
+	        "array": "The :attr must have at least :min items"
+	    },
+	    "not_in": "The selected :attr is invalid",
+	    "numeric": "The :attr must be a number",
+	    "regex": "The :attr format is invalid",
+	    "required": "The :attr field is required",
+	    "required_if": "The :attr field is required when :other is :value",
+	    "required_unless": "The :attr field is required unless :other is in :values",
+	    "required_with": "The :attr field is required when :values is present",
+	    "required_with_all": "The :attr field is required when :values is present",
+	    "required_without": "The :attr field is required when :values is not present",
+	    "required_without_all": "The :attr field is required when none of :values are present",
+	    "same": "The :attr and :other must match",
+	    "size": {
+	        "numeric": "The :attr must be :size",
+	        "file": "The :attr must be :size kilobytes",
+	        "string": "The :attr must be :size characters",
+	        "array": "The :attr must contain :size item"
+	    },
+	    "string": "The :attr must be a string",
+	    "url": "The :attr format is invalid",
+
+
+	"_comment_1": "REST API KEY MESSAGES",
+		"text_rest_required_api_key": "Required API key",
+		"text_rest_invalid_api_key": "Invalid API key",
+		"text_rest_invalid_credentials": "Invalid credentials",
+		"text_rest_ip_denied": "IP denied",
+		"text_rest_ip_unauthorized": "IP unauthorized",
+		"text_rest_unauthorized": "Unauthorized",
+		"text_rest_ajax_only": "Only AJAX requests are allowed",
+		"text_rest_api_key_unauthorized": "This API key does not have access to the requested controller",
+		"text_rest_api_key_permissions": "This API key does not have enough permissions",
+		"text_rest_api_key_time_limit": "This API key has reached the time limit for this method",
+		"text_rest_unknown_method": "Unknown method",
+		"text_rest_unsupported": "Unsupported protocol",
+		"text_rest_tokeninvalid": "Invalid your token",
+		"text_rest_invalidparam": "Invalid parameters provided",
+	
+	"_comment_2": "Common Messages",
+		"api_valid_details": "Please provide valid details",
+		"api_no_data": "No data found",
+		"text_rest_invalid_details": "Please enter valid details",
+		"text_rest_uploadfail": "Fail to upload image",
+		"text_rest_something_went_wrong" : "Something went wrong!",
+		"text_rest_already_taken" : "Sorry this %s is already taken",
+
+	"text_user_err" : "Error occured, try after some time.",
+
+	"text_user_is_available" : "{field} is available",
+	"text_user_exist" : "Sorry! {field} is already registered",
+
+	"text_user_social_id_not_registered_yet" : "Your Social ID is not registered",
+	"text_user_email_id_not_registered_yet" : "Your email ID is not registered",
+	"text_user_login_inactive": "You’re account has been inactivated. Please contact to admin for reactivate your account",
+	"text_user_login_deleted": "You’re account has been deleted. Please contact to admin for reactivate your account",
+	"text_user_login_fail" : "You have entered an invalid username or password",
+	"text_customer_login_success" : "Login successfully",
+
+	"text_user_signup_success": "You have successfully signed up",
+	"text_user_login_new": "This user is not register",
+	"text_user_login_success": "Login successfully",
+
+	"text_user_detail_found": "User details found",
+	"text_user_not_found": "User details not found",
+
+	"text_user_forgot_password_fail": "The email you have entered is not associated with any account",
+	"text_user_forgot_password_role": "Sorry! You can not reset your password as you have registered with social account",
+	"text_user_forgot_password_success": "New password has been sent to your registered email",
+
+	"text_user_change_password_success": "Your password changed successfully",
+	"text_user_change_password_fail": "Old password is incorrect",
+
+	"text_user_edit_profile_success" : "Profile details updated successfully.",
+	"text_user_edit_profile_fail" : "Error occured during update profile details.",
+
+	"text_location_updated_success" : "Location updated",
+	"text_device_updated_success" : "Device details updated",
+
+	"text_contact_us_added" : "Your query submited successfully admin will contact you soon.",
+	"text_contact_us_added_fails" : "Error occured during submiting your query",
+
+	"text_parks_trails_found" : "Park Trails list found.",
+	"text_parks_trails_not_found" : "Park trails not found.",
+
+	"text_parks_trails_details_found" : "Park Trails details found.",
+	"text_parks_trails_details_not_found" : "Park trails details not found.",
+	
+	"text_parks_trails_reviews_found" : "Park Trails reviews found.",
+	"text_parks_trails_reviews_not_found" : "Park trails reviews not found.",
+
+	"text_parks_trails_favourites" : "Park Trails favourites successfully.",
+	"text_parks_trails_unfavourites" : "Park Trails unfavourites successfully.",
+
+	"text_parks_trails_starts" : "Park Trails start successfully.",
+	"text_parks_trails_already_started" : "Your trailing already started.",
+	"text_parks_trails_not_ends" : "You could not end park/trails without start.",
+	"text_parks_trails_stops" : "Park Trails end successfully.",
+
+	"text_trailing_is_not_start" : "You could not start tracking without starting trailing.",
+
+	"text_tracking_service_on" : "Tracking service ON successfully.",
+	"text_tracking_service_off" : "Tracking service off successfully.",
+
+	"text_users_list_found" : "Users list found.",
+	"text_users_list_not_found" : "Users list not found.",
+
+	"text_user_deleted_successfully" : "User deleted successfully.",
+
+	"text_give_feedback_success" : "Feedback given successfully.",
+
+	"text_park_trails_history_found" : "Park/Trails history found.",
+	"text_park_trails_history_not_found" : "Park/Trails history not found.",
+
+	"text_park_trails_history_details_not_found" : "Park/Trails history details not found.",
+	"text_park_trails_history_details_found" : "Park/Trails history details found successfully.",
+
+	"text_my_updates_not_found" : "My updates not found",
+	"text_my_updates_found" : "My updates found",
+
+	"text_park_trails_favourite_list_found" : "Park/Trails favourite list found.",
+	"text_park_trails_favourite_list_not_found" : "Park/Trails favourite list not found.",
+
+	"text_my_park_trails_list_found" : "My Park/Trails list found.",
+	"text_my_park_trails_list_not_found" : "My Park/Trails list not found.",
+
+	"text_amenities_not_found" : "Amenities list not found.",
+	"text_amenities_found" : "Amenities list found.",
+
+	"text_start_trails_not_found" :"You haven't start trails yet.",
+	"text_users_not_found" :"Users not found in park/trails.",
+	"text_amenities_added" : "Amenities updated successfully.",
+
+	"text_amenities_point_details_found" : "Amenities point details found.",
+	"text_amenities_point_details_not_found" : "Amenities point details not found.",
+
+	"text_park_trails_added" : "Park/Trails added successfully.",
+	"text_park_trails_updated" : "Park/Trails updated successfully.",	
+	"text_park_trails_deleted" : "Park/Trails deleted successfully.",
+
+	"push_new_update_added": "New updates found in park/trails",
+	"text_user_insert_err" : "Something went wrong.",
+
+	"text_user_logout":"Logout",
+
+	"text_end_of_string": "End of string"
+} 

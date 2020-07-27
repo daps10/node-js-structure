@@ -1,0 +1,733 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+	<link href="https://unpkg.com/vuetify@1.0.17/dist/vuetify.min.css" type="text/css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
+	<link rel="shortcut icon" href="<%= globals.base_url %>api/public/images/icons/logo.png">
+	<title><%= globals.app_name %> API</title> 
+	<style type="text/css">
+		.medium-text{
+			font-size: 18px;
+			color:white;
+		}
+		.js div#preloader{ 
+			position: fixed; 
+			left: 0; 
+			top: 0; 
+			z-index: 999; 
+			width: 100%; 
+			height: 100%; 
+			overflow: visible; 
+			background: #fff url('<%= globals.base_url %>api/public/images/ripple.gif') no-repeat center center; 
+		}
+	</style>
+	</head>
+	<body class="js">
+		<div id="preloader"></div>
+		<div id="app">
+			<v-app id="inspire" style = "background-image:url('<%= globals.base_url %>api/public/images/icons/logo.png') no-repeat center center !important;">
+				<v-layout justify column>
+					<v-flex style="margin:10px auto 10px auto; padding:0px; text-align:center;" center right sm2 xs2 md2 lg2 xl2>
+						<img src='<%= globals.base_url %>api/public/images/icons/logo.png %>' width="120px"><br>
+						<strong style="font-size:24px;"><%= globals.app_name %> API LIST</strong><br><br>
+					</v-flex>
+					<v-flex style="margin:0px auto; padding:0px; text-align:center;" center right sm2 xs2 md2 lg2 xl2>
+						<div style="margin:0px auto; text-align:center; position:sticky; font-size:18px;">
+							<v-alert :value="true" outline color="white" style="padding:5px;">
+								<v-chip color="green" text-color="white">
+									<v-avatar>
+										<v-icon>bookmark</v-icon>
+									</v-avatar>TOTAL {{messages.length}} API's
+								</v-chip>
+								<a href="#USER">
+									<v-chip color="green" text-color="white">
+										<v-avatar>
+											<v-icon>bookmark</v-icon>
+										</v-avatar> {{messages.length}} API's FOR USER
+									</v-chip>
+								</a>
+							</v-alert>
+							<span><b>Server URL :-</b> <%= globals.port_base_url %>api/v1</span><br>
+							<span><b>Header Parameters :-</b> api-key,token,Accept-Language</span><br>
+							<span style="color:#ccc;"><b>api-key</b> : DEX</span><br>
+							<span><b style="color:red;">If Device Token not get pass key with blank value</b></span><br>
+							<span><b style="color:orangered;">All listing api return status code "HTTP_OK[200] - code : 2" also on empty list.<br> </b></span>
+							<span><b style="color:orangered;">Upload image in S3 BUCKET.</b><br></span>
+							<span><b style="color:orangered;">Directory for USER => user/<br></b></span>
+							<span> 
+								<b style="color: orangered"><a href="<%= globals.base_url %>home/terms_and_conditions">terms_and_condition</a></b><br>
+								<b style="color: orangered"><a href="<%= globals.base_url %>home/help_faqs">help_faqs</a></b>
+							</span>
+							<br><br>
+						</div>
+					</v-flex>
+					<v-flex style="margin:0px auto;" center right sm2 xs2 md2 lg2 xl2>
+						<a target="_blank" href='<%= globals.port_base_url %>api/v1/api_docs/user_list'>
+							<v-btn color="blue-grey" class="white--text">
+								USER LIST <v-icon right dark>people</v-icon>
+							</v-btn>
+						</a>
+						<a target="_blank" href='<%= globals.port_base_url %>api/v1/api_docs/code'>
+							<v-btn color="blue-grey" class="white--text">
+								CODE REFERENCE <v-icon right dark>code</v-icon>
+							</v-btn>
+						</a>	
+						<a target="_blank" href='<%= globals.base_url %>api/enc_dec.php'>
+							<v-btn color="blue-grey" class="white--text">
+								ENCRYPTION URL <v-icon right dark>lock</v-icon>
+							</v-btn>
+						</a>	
+
+					</v-flex>
+					<v-flex style="margin:0px auto 10px auto; padding:0px; text-align:center;" center right sm2 xs2 md2 lg2 xl2>
+						<br><br><br>
+						<span id='USER'></span>
+					</v-flex>
+					<v-expansion-panel popout>
+						<v-expansion-panel-content v-for="(message, i) in messages" :key="i" hide-actions>
+							<v-layout slot="header" align-center row spacer>
+								<v-flex sm1 xs1 md1 lg1 xl1>
+									<v-avatar slot="activator" size="36px">
+										<v-icon :color="message.color">{{ message.icon }}</v-icon>
+									</v-avatar>
+								</v-flex>
+								<v-flex sm3 xs3 md3 lg3 xl3>
+									<strong v-html="message.title"></strong>
+									<v-chip v-if="message.meth" :color="`${message.color} lighten-4`" label small class="ml-0">
+										{{ message.meth }}
+									</v-chip>
+								</v-flex>
+								<v-flex sm3 xs3 md3 lg3 xl3>
+									<strong v-html="message.name"></strong><br>
+									<span v-if="message.updated" style="color:orange">{{ message.updated }}</span>
+									<span v-if="message.new_added" style="color:green"><span v-html="message.new_added"></span></span>
+								</v-flex>
+								<v-flex sm4 xs4 md4 lg4 xl4>
+									<v-flex v-if="message.link" class="grey--text" ellipsis hidden-sm-and-down>
+										{{ message.link }}
+									</v-flex>
+									<v-flex class="grey--text" ellipsis hidden-sm-and-down>
+										<span v-if="message.imp" style="color:darkred">SHOW IMPORTANT NOTE INSIDE</span>
+									</v-flex>
+								</v-flex>	
+							</v-layout>
+							<v-card dark>
+								<v-container>
+									<v-layout v-if="message.new_tag === '0' ">
+										<v-flex xs12 align-end flexbox>
+											<v-alert v-if="message.new_added" :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="green" text-color="white">
+													<v-avatar>
+														<v-icon>fiber_new</v-icon>
+													</v-avatar> NEW
+												</v-chip>
+												<span v-html="message.new_added"></span>
+											</v-alert>
+											<v-alert v-if="message.updated" :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="orange" text-color="white">
+													<v-avatar>
+														<v-icon>update</v-icon>
+													</v-avatar> UPDATED
+												</v-chip>
+												<span>{{ message.updated }}</span>
+											</v-alert>
+											<v-alert :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="teal" text-color="white">
+													<v-avatar>
+														<v-icon>check_circle</v-icon>
+													</v-avatar> MANDATORY
+												</v-chip>
+												{{message.mandatory}}
+											</v-alert>
+											<v-alert :value="true" outline color="white" style="padding:5px;">
+												<v-chip outline color="#F0F4C3">
+													<v-avatar>
+														<v-icon>check_circle</v-icon>
+													</v-avatar>OPTIONAL
+												</v-chip>
+												<span>{{ message.optional }}
+											</v-alert>
+											<v-alert v-if="message.link" :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="light-green darken-2" text-color="white">
+													<v-avatar>
+														<v-icon>explore</v-icon>
+													</v-avatar> LINK
+												</v-chip>
+												<span>{{ message.link }}
+											</v-alert>
+											<v-alert v-if="message.imp" :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="red darken-2" text-color="white">
+													<v-avatar>
+														<v-icon>flight_land</v-icon>
+													</v-avatar> IMPORTANT
+												</v-chip>
+												<p v-html="message.imp"></p>
+											</v-alert>
+											<v-alert v-if="message.notes" :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="blue lighten-1" text-color="white">
+													<v-avatar>
+														<v-icon>bookmark</v-icon>
+													</v-avatar> NOTES
+												</v-chip>
+												<span>{{ message.notes }}
+											</v-alert>
+											<v-alert v-if="message.example" :value="true" outline color="white" style="padding:5px;">
+												<v-chip color="red darken-2" text-color="white">
+													<v-avatar>
+														<v-icon>check_circle</v-icon>
+													</v-avatar> EXAMPLE
+												</v-chip>
+												<p v-html="message.example"></p>
+											</v-alert>
+											<v-layout style="margin-top:-4px">
+												<v-flex xs6 align-end flexbox>
+													<v-alert :value="true" outline color="yellow" icon="priority_high" style="padding:5px;">
+															<span class="grey--text">HEADER : {{ message.is_header }}, PUSH : {{ message.is_push }}</span><br>
+															<span>HEADER : {{ message.header }}</span>
+													</v-alert>
+												</v-flex>
+												<v-flex xs6 align-end flexbox>
+													<v-alert style="margin-left:4px; padding:5px;" :value="true" outline color="yellow" icon="priority_high">
+														STATUS : <span v-html="message.status"></span>
+													</v-alert>
+												</v-flex>
+											</v-layout>		
+										</v-flex>
+									</v-layout>
+								</v-container>
+								<v-card-actions>
+								</v-card-actions>
+							</v-card>
+						</v-expansion-panel-content>
+					</v-expansion-panel>
+				</v-layout>
+			</v-app>
+		</div>
+		<div id="asd"></div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/vuetify@1.0.17/dist/vuetify.min.js"></script>
+		<script src="https://unpkg.com/babel-polyfill/dist/polyfill.min.js"></script>
+
+		<script>
+
+			jQuery(document).ready(function($) {  
+				$('#preloader').fadeOut('slow',function(){$(this).remove();});
+			});
+
+			new Vue({
+			el: '#app',
+			data: () => ({
+					messages: [
+						{
+							new_tag: '1',
+							color: 'green',
+							title: 'USER API',
+							icon: 'person_add',
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '1 : USER',
+							name: 'VERIFICATION',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/verification",
+							mandatory: "",
+							optional :"email, phone",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key",
+							notes: "This api is used to verified email and phone number",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '2 : USER',
+							name: 'LOGIN',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/login",
+							mandatory: "login_type,device_type,device_token",
+							optional :"email,password,social_id, device_name, uuid,ip,os_version",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key",
+							notes: "This api is used to login with the social id or email and password",
+							imp : "1) login_type should be ('S','F','G') <br>2) device_type should be('I', 'A') <br>3) email and password should be give while you choose simple login. <br> 4)social_id should be give while you choose social login.",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 3 <br>4. HTTP_OK[200] - code : 11",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '3 : USER',
+							name: 'SIGNUP',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/signup",
+							mandatory: "login_type,name,email,device_type,device_token,",
+							optional :"profile_image,password,social_id, device_name,uuid,ip,os_version",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key",
+							notes: "This api is used to signup",
+							imp : "1) login_type should be ('S','F','G') <br> 2) device_type should be('I', 'A')",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 ",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '4 : USER',
+							name: 'FORGOT PASSWORD',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/forgot_password",
+							mandatory: "email",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key",
+							notes: "This api is used to forgot the password",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1<br>3. HTTP_OK[200] - code : 3",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '5 : USER',
+							name: 'CHANGE PASSWORD',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/change_password",
+							mandatory: "old_password, new_password",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to change the password",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '6 : USER',
+							name: 'DETAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/details",
+							mandatory: "",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get user details",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '7 : USER',
+							name: 'EDIT PROFILE',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/edit_profile",
+							mandatory: "name, email ",
+							optional :"profile_image",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to edit user profile",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 ",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '8 : USER',
+							name: 'UPDATE LOCATION',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/update_location",
+							mandatory: "latitude, longitude",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to update location",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 ",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '9 : USER',
+							name: 'UPDATE DEVICE',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/update_device",
+							mandatory: "device_type, device_token,device_name, uuid,ip, os_version",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to update device info",
+							imp : "1) device type should be ('I', 'A')",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 ",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '10 : USER',
+							name: 'ADD CONTACT US',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/add_contact_us",
+							mandatory: "subject, comment",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to add contact us.",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 ",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '11 : USER',
+							name: 'LOGOUT',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/user/logout",
+							mandatory: "",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to user logout",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 ",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag: '1',
+							color: 'green',
+							title: 'PARK AND TRAILS API',
+							icon: 'person_add',
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '1 : PARK AND TRAILS',
+							name: 'GET NEARBY PARK AND TRAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_nearby_parks_trails",
+							mandatory: "latitude,longitude,page",
+							optional :"distance, rating,amenities,search",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get nearby park and trails",
+							imp : "1) amenities must be pass along with comma separated string.<br> 2) search must be start of park or trails name<br> 3) is_favourite for 0 =>'No', 1=> 'Yes'",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '2 : PARK AND TRAILS',
+							name: 'GET PARK AND TRAILS DETAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_park_trails_details",
+							mandatory: "park_trail_id,latitude,longitude",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get park and trails details",
+							imp : "1) park_trail_id must be pass which you've got from previous api.<br> 2) is_favourite for 0 =>'No', 1=> 'Yes'",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '3: PARK AND TRAILS',
+							name: 'GET ALL AMENITIES',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_all_amenities",
+							mandatory: "",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get all amenities",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '4 : PARK AND TRAILS',
+							name: 'PARK/TRAILS FAVORITE-UNFAVORITE',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/favourites_park_trails",
+							mandatory: "park_trail_id",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get park and trails details",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '5 : PARK AND TRAILS',
+							name: 'PARK/TRAILS START END TRAILING',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/start_end_trailing",
+							mandatory: "park_trail_id, status",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to start and end trailing for park and trails",
+							imp : "1) status must be ('Start', 'End')",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '6 : PARK AND TRAILS',
+							name: 'TRACKING ON/OFF',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/tracking_on_off",
+							mandatory: "park_trail_id,status",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to users tracking on or off for that particular park or trails.",
+							imp : "1) status must be ('On', 'Off')",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '7 : PARK AND TRAILS',
+							name: 'GET ALL USERS LOCATION',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_all_users_location",
+							mandatory: "park_trail_id",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get all users location to respective park or trails.",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '8 : PARK AND TRAILS',
+							name: 'ADD RATE AND REVIEW',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/add_rate_reviews",
+							mandatory: "park_trail_id, rate,review",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to add rate and review for parks/trails",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '9 : PARK AND TRAILS',
+							name: 'ADD UPDATE PARK TRAILS AMENITIES',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/add_update_park_trails_amenities",
+							mandatory: "park_trail_id,address,latitude,longitude,type,description",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to update amenities on map",
+							imp : "1) put the name of the amenity which you wanna add. that name must be get it from the get_all_amenities api.",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '10 : PARK AND TRAILS',
+							name: 'GET POINTS DETAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_point_details",
+							mandatory: "amenities_id",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get points details.",
+							imp : "1) amenities_id must be id from the amenities array which is in the get_park_trails_details api.",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '11 : PARK AND TRAILS',
+							name: 'GET PARK TRAILS HISTORY',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_park_trails_history",
+							mandatory: "page",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get park/trails history",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '12 : PARK AND TRAILS',
+							name: 'GET PARK TRAILS HISTORY DETAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_park_trails_history_details",
+							mandatory: "id",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get park/trails history details",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							imp : "1) Enter the id 'key' of get_park_trails_history api.",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '13 : PARK AND TRAILS',
+							name: 'GET FAVOURITES PARK TRAILS LIST',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_favourites_park_trails_list",
+							mandatory: "latitude,longitude, page",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get favourites park and trails list",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '14 : PARK AND TRAILS',
+							name: 'GET MY PARK TRAILS LIST',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/get_my_park_trails_list",
+							mandatory: "page",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to get my park and trails list",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '15 : PARK AND TRAILS',
+							name: 'ADD PARK TRAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/add_park_trails",
+							mandatory: "name, length,description,address,latitude,longitude,images,type,routes",
+							optional :"amenities",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to add park and trails details.",
+							imp: "<br> 1. images must be comma separated Like :  image1,image2 <br> 2. routes must be give in array.<br> 3. amenities must be give in array <br> 4. type must be ('Park', 'Trail')",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '16 : PARK AND TRAILS',
+							name: 'EDIT PARK TRAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/edit_park_trails",
+							mandatory: "name,park_trail_id,type",
+							optional :"length,description,address,latitude,longitude,images,routes,amenities",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to update park and trails details.",
+							imp: "<br> 1. images must be comma separated Like :  image1,image2 <br> 2. routes must be give in array.<br> 3. amenities must be give in array <br> 4. type must be ('Park', 'Trail')",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag : '0',
+							color: 'teal',
+							icon: 'supervisor_account',
+							title: '17 : PARK AND TRAILS',
+							name: 'REMOVE PARK TRAILS',
+							meth: 'POST',
+							link: "<%= globals.port_base_url %>api/v1/park_trails/remove_park_trails",
+							mandatory: "park_trail_id",
+							optional :"",
+							is_header: "YES",
+							is_push: "NO",
+							header: "api-key, token",
+							notes: "This api is used to remove park and trails details.",
+							status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+							new_added: "06 APRIL 2020"
+						},
+						{
+							new_tag: '1',
+							color: 'green',
+						},
+					],
+				})
+			})
+		</script>
+	</body>
+</html>

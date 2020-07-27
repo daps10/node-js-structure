@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <link rel="shortcut icon" href="<?php echo base_url();?>assets/images/<?php echo $this->fav_icon;?>"> -->
+    <title>User List</title>
+</head>
+<body>
+    <div>
+        <p style="font-size: 20px;"><b>User List</b></p>
+        <br>login_type :  S->Simple <!-- F->Facebook G->Google -->
+        <br><br>
+        <!-- <span><b style="color:red;">Note :- </b> U -> User </span>
+            <br> -->
+    </div><br>
+    <table id="myTable" border="1"> 
+        <thead> 
+        <tr> 
+            <th>ID</th>
+            <th>NAME</th>
+            <th>EMAIL</th>
+            <th>PASSWORD</th>
+            <th>USER_TYPE</th>
+            <th>TOKEN</th>
+            <th>COUNTRY_CODE</th>
+            <th>PHONE_NUMBER</th>
+            <th>STATUS</th>
+            <th>LOGIN_TYPE</th>
+            <th>LOGIN</th>
+            <th>UUID</th>
+            <th>OS_VERSION</th>
+            <th>DEVICE_TYPE</th>
+            <th>DEVICE_NAME</th>
+            <th>DEVICE_TOKEN</th>
+            <th>IP</th>
+            <th>LAST LOGIN</th>
+            <th>INSERTDATE</th>
+        </tr> 
+        </thead> 
+        <tbody> 
+            <% if(data != null){ %>
+            <% for (var i = 0; i < data.length; i++) { %>
+                <tr> 
+                    <td><%= data[i].id %></td>
+                    <td><%= data[i].name %></td>
+                    <td><%= data[i].email %></td>
+                    <td><%= data[i].password %></td>
+                    <td><%= data[i].user_type %></td>
+                    <td><%= data[i].token %></td>
+                    <td><%= data[i].country_code %></td>
+                    <td><%= data[i].phone %></td>
+                    <td><%= data[i].status %></td>
+                    <td><%= data[i].login_type %></td>
+                    <td><%= data[i].login %></td>
+                    <td><%= data[i].uuid %></td>
+                    <td><%= data[i].os_version %></td>
+                    <td><%= data[i].device_type %></td>
+                    <td><%= data[i].device_name %></td>
+                    <td><%= data[i].device_token %></td>
+                    <td><%= data[i].ip %></td>
+                    <td><%= data[i].last_login %></td>
+                    <td><%= data[i].insertdate %></td>
+                </tr> 
+            <% }             
+        }
+            %>
+        </tbody> 
+    </table> 
+     
+
+</body>
+</html>
+    
